@@ -29,14 +29,14 @@ The archive will contain a few items:
 
 You can use the `jq` tool to convert the JSON files to CSV:
 
-To create a single column CSV with all your urls, in the directory with your json files:
+To create a single column CSV (`output.csv`) with all your urls, in the directory with your json files:
 
 ```
-jq -r '.[].url' *.json
+jq -r '.[].url' *.json > output.csv
 ```
 
-To create a CSV that also contains your labels, you can use this command:
+To create a CSV (`output.csv`) that also contains your labels in a second column, you can use this command:
 
 ```
-jq -r '[.[] | {url: .url, labels: (.labels | join(","))} | "\(.url),\"\(.labels)\""] | @csv' *.json
+jq -r '.[] | [.url, (.labels | join(","))] | @csv' *.json > output.csv
 ```
